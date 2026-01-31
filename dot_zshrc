@@ -1,0 +1,53 @@
+# ~/.zshrc
+# Main zsh configuration file
+
+# ------------------------------
+# Load configuration from ~/.config/zsh
+# ------------------------------
+ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+
+# ------------------------------
+# Load configuration files
+# ------------------------------
+# Load conf.d files in order
+for conf_file in "${ZDOTDIR}"/conf.d/*.zsh(N); do
+  source "${conf_file}"
+done
+
+# ------------------------------
+# Load functions
+# ------------------------------
+fpath=("${ZDOTDIR}/functions" $fpath)
+autoload -Uz ${ZDOTDIR}/functions/*(:t)
+
+# ------------------------------
+# Load tool initializations
+# ------------------------------
+if [[ -f "${ZDOTDIR}/tools.zsh" ]]; then
+  source "${ZDOTDIR}/tools.zsh"
+fi
+
+# ------------------------------
+# Load sheldon plugins
+# ------------------------------
+if command -v sheldon &>/dev/null; then
+  eval "$(sheldon source)"
+fi
+
+# ------------------------------
+# peco integration
+# ------------------------------
+if command -v peco &>/dev/null; then
+  # cd to ghq managed repository
+  bindkey '^]' peco-src
+
+  function peco-src() {
+    local src=$(ghq list --full-path | peco --query "$LBUFFER")
+    if [ -n "$src" ]; then
+      BUFFER="cd $src"
+      zle accept-line
+    fi
+    zle -R -c
+  }
+  zle -N peco-src
+fi

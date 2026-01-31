@@ -1,0 +1,17 @@
+#!/bin/bash
+# Install sheldon if not already installed
+
+if ! command -v sheldon &> /dev/null; then
+  echo "Installing sheldon..."
+  {{- if eq .chezmoi.os "darwin" }}
+  brew install sheldon
+  {{- else if eq .chezmoi.os "linux" }}
+  curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
+    | bash -s -- --repo rossmacarthur/sheldon --to ~/.local/bin
+  {{- end }}
+else
+  echo "sheldon is already installed"
+fi
+
+# Lock sheldon plugins
+sheldon lock
