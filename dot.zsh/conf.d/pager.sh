@@ -1,0 +1,14 @@
+# ------------------------------
+# Pager configuration
+# ------------------------------
+if [ -x "`which lv`" ]; then
+  export PAGER='lv -c'
+elif [ -x "`which jless`" ]; then
+  export PAGER=jless
+elif [ -x "`which less`" ]; then
+  export PAGER=less
+  export LESS='-R'
+  export LESSOPEN='| /usr/local/bin/src-hilite-lesspipe.sh %s'
+else
+  export PAGER=more
+fi

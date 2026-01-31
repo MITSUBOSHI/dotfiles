@@ -1,0 +1,10 @@
+# Ignore temporary and git files in dot.zsh
+dot.zsh/.git
+dot.zsh/.zcompdump
+dot.zsh/.zsh_sessions
+
+# Ignore git directories and files in submodules
+dot.zsh/submodules/**/.git
+dot.zsh/submodules/**/.gitignore
+dot.zsh/submodules/**/.gitmodules
+dot.zsh/submodules/**/.gitattributes
