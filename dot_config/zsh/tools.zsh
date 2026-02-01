@@ -1,4 +1,12 @@
-# Tool initialization
+# ~/.config/zsh/tools.zsh
+# Tool initializations and environment setup
+
+# ------------------------------
+# Homebrew
+# ------------------------------
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
 
 # ------------------------------
 # Ruby
@@ -118,4 +126,60 @@ export NVM_DIR="$HOME/.nvm"
 if [[ -d $HOME/.volta ]]; then
   export VOLTA_HOME="$HOME/.volta"
   export PATH="$VOLTA_HOME/bin:$PATH"
+fi
+
+# ------------------------------
+# git worktree (wt)
+# ------------------------------
+if command -v git &>/dev/null && git wt --init zsh &>/dev/null 2>&1; then
+  eval "$(git wt --init zsh)"
+
+  # Helper function to select worktree with peco
+  wt() {
+    git wt "$(git wt | tail -n +2 | peco | awk '{print $(NF-1)}')"
+  }
+fi
+
+# ------------------------------
+# PATH extensions
+# ------------------------------
+# libpq (PostgreSQL client)
+if [[ -d /opt/homebrew/opt/libpq/bin ]]; then
+  export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+fi
+
+# Ubie eng-tools
+if [[ -d $HOME/ghq/github.com/ubie-inc/eng-tools ]]; then
+  export PATH="$HOME/ghq/github.com/ubie-inc/eng-tools:$PATH"
+fi
+
+# Local bin
+if [[ -f "$HOME/.local/bin/env" ]]; then
+  source "$HOME/.local/bin/env"
+fi
+
+# pnpm
+export PNPM_HOME="$HOME/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+
+# ------------------------------
+# NPM/Node authentication
+# ------------------------------
+if [[ -f $HOME/.npm_access_token ]]; then
+  export NPM_AUTH_TOKEN=$(cat $HOME/.npm_access_token)
+  export NODE_AUTH_TOKEN=$(cat $HOME/.npm_access_token)
+fi
+
+# ------------------------------
+# Google Cloud SDK
+# ------------------------------
+if [[ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]]; then
+  source "$HOME/google-cloud-sdk/path.zsh.inc"
+fi
+
+if [[ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]]; then
+  source "$HOME/google-cloud-sdk/completion.zsh.inc"
 fi
