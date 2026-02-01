@@ -2,6 +2,13 @@
 
 Modern dotfiles managed with chezmoi, featuring XDG Base Directory compliance and plugin management with sheldon.
 
+## History
+
+This configuration was migrated from [dot.zsh](https://github.com/MITSUBOSHI/dot.zsh) and refactored to follow modern best practices:
+- Migrated from git submodules to sheldon for plugin management
+- Adopted XDG Base Directory specification
+- Reorganized into a modular structure with chezmoi
+
 ## Features
 
 - **Modern structure**: Uses `~/.config` for configuration files (XDG Base Directory)
@@ -125,6 +132,16 @@ To update plugins:
 ```bash
 sheldon lock --update
 ```
+
+### First-time Setup (Optional)
+
+After applying dotfiles, you can optionally run `sheldon lock` to generate a lock file and cache plugins:
+
+```bash
+sheldon lock
+```
+
+This is optional - sheldon will work without a lock file, but the first shell startup may be slightly slower as it downloads plugins on-demand.
 
 ## Tools Automatically Initialized
 
