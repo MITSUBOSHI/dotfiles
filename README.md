@@ -1,5 +1,8 @@
 # dotfiles
 
+> **Notice**: This repository has been migrated from [dot.zsh](https://github.com/MITSUBOSHI/dot.zsh) to https://github.com/MITSUBOSHI/dotfiles.
+> The old repository (dot.zsh) is archived and will no longer be maintained.
+
 Modern dotfiles managed with chezmoi, featuring XDG Base Directory compliance and plugin management with sheldon.
 
 ## History
