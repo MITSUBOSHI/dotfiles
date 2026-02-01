@@ -1,5 +1,8 @@
 # Aliases configuration
 
+# expand aliases before completing
+setopt complete_aliases # aliased ls needs if file/dir completions work
+
 # Basic aliases
 alias a=alias
 alias du="du -h"
