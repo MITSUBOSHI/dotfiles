@@ -3,7 +3,7 @@
 > **Notice**: This repository has been migrated from [dot.zsh](https://github.com/MITSUBOSHI/dot.zsh) to https://github.com/MITSUBOSHI/dotfiles.
 > The old repository (dot.zsh) is archived and will no longer be maintained.
 
-Modern dotfiles managed with chezmoi, featuring XDG Base Directory compliance and plugin management with sheldon.
+Modern dotfiles managed with chezmoi, featuring XDG Base Directory compliance and modular configuration structure.
 
 ## History
 
@@ -12,10 +12,12 @@ This configuration was migrated from [dot.zsh](https://github.com/MITSUBOSHI/dot
 - Adopted XDG Base Directory specification
 - Reorganized into a modular structure with chezmoi
 
+**Note**: The sheldon setup script temporarily renames `.gitconfig` during plugin initialization to avoid potential conflicts with custom git configurations (e.g., URL rewrites that may interfere with HTTPS cloning).
+
 ## Features
 
 - **Modern structure**: Uses `~/.config` for configuration files (XDG Base Directory)
-- **Plugin management**: Uses [sheldon](https://sheldon.cli.rs/) instead of git submodules
+- **Plugin management**: Uses [sheldon](https://sheldon.cli.rs/) for fast and reliable plugin management
 - **Clean organization**: Separated by functionality (options, history, completion, keybind, prompt, aliases)
 - **Tool initialization**: Automatic setup for rbenv, goenv, direnv, pyenv, volta, and more
 - **Managed with chezmoi**: Easy deployment and synchronization across machines
@@ -45,7 +47,7 @@ chezmoi diff
 chezmoi apply
 ```
 
-The `run_once_install-sheldon.sh.tmpl` script will automatically install sheldon on first run.
+The `run_once_install-sheldon.sh.tmpl` script will automatically install sheldon and download plugins on first run.
 
 ## Directory Structure
 
@@ -130,21 +132,23 @@ Managed by sheldon (`~/.config/sheldon/plugins.toml`):
 - **zsh-autosuggestions**: Fish-like autosuggestions
 - **zsh-completions**: Additional completion definitions
 
+### Plugin Management
+
+Plugins are automatically downloaded on first `chezmoi apply`.
+
 To update plugins:
 
 ```bash
 sheldon lock --update
 ```
 
-### First-time Setup (Optional)
-
-After applying dotfiles, you can optionally run `sheldon lock` to generate a lock file and cache plugins:
+**Troubleshooting**: If `sheldon lock` hangs during plugin download, it may be due to custom git configurations (such as URL rewrites or authentication settings). The setup script handles this automatically by temporarily isolating the git environment. For manual updates, you can use the same approach:
 
 ```bash
-sheldon lock
+mv ~/.gitconfig ~/.gitconfig.tmp
+sheldon lock --update
+mv ~/.gitconfig.tmp ~/.gitconfig
 ```
-
-This is optional - sheldon will work without a lock file, but the first shell startup may be slightly slower as it downloads plugins on-demand.
 
 ## Tools Automatically Initialized
 
