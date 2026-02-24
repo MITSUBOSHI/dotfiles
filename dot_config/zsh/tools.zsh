@@ -166,6 +166,15 @@ case ":$PATH:" in
 esac
 
 # ------------------------------
+# bun
+# ------------------------------
+if [[ -d $HOME/.bun ]]; then
+  export BUN_INSTALL="$HOME/.bun"
+  export PATH="$BUN_INSTALL/bin:$PATH"
+  [ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"
+fi
+
+# ------------------------------
 # NPM/Node authentication
 # ------------------------------
 if [[ -f $HOME/.npm_access_token ]]; then
