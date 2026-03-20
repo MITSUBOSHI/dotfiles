@@ -1,0 +1,23 @@
+#!/bin/bash
+# Symlink docker to finch
+
+{{- if eq .chezmoi.os "darwin" }}
+if command -v finch &> /dev/null; then
+  if [ -L /usr/local/bin/docker ]; then
+    current_target=$(readlink /usr/local/bin/docker)
+    if [ "$current_target" != "/usr/local/bin/finch" ]; then
+      echo "Updating docker symlink to point to finch..."
+      sudo ln -sf /usr/local/bin/finch /usr/local/bin/docker
+    else
+      echo "docker already points to finch"
+    fi
+  elif [ ! -e /usr/local/bin/docker ]; then
+    echo "Creating docker symlink to finch..."
+    sudo ln -s /usr/local/bin/finch /usr/local/bin/docker
+  else
+    echo "Warning: /usr/local/bin/docker exists and is not a symlink, skipping"
+  fi
+else
+  echo "finch is not installed, skipping docker symlink"
+fi
+{{- end }}
