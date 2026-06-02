@@ -157,6 +157,13 @@ fi
 if [[ -f "$HOME/.local/bin/env" ]]; then
   source "$HOME/.local/bin/env"
 fi
+# ~/.local/bin (claude, chezmoi, sheldon, etc.)
+if [[ -d "$HOME/.local/bin" ]]; then
+  case ":$PATH:" in
+    *":$HOME/.local/bin:"*) ;;
+    *) export PATH="$HOME/.local/bin:$PATH" ;;
+  esac
+fi
 
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
