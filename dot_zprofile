@@ -1,0 +1,13 @@
+# ~/.zprofile
+# Login shell configuration
+
+# ------------------------------
+# Google Cloud SDK
+# ------------------------------
+for google_cloud_sdk_dir in "$HOME/.local/google-cloud-sdk" "$HOME/google-cloud-sdk"; do
+  if [[ -f "$google_cloud_sdk_dir/path.zsh.inc" ]]; then
+    source "$google_cloud_sdk_dir/path.zsh.inc"
+    break
+  fi
+done
+unset google_cloud_sdk_dir

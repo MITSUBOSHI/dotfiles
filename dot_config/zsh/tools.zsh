@@ -192,10 +192,17 @@ fi
 # ------------------------------
 # Google Cloud SDK
 # ------------------------------
-if [[ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]]; then
-  source "$HOME/google-cloud-sdk/path.zsh.inc"
-fi
+for google_cloud_sdk_dir in "$HOME/.local/google-cloud-sdk" "$HOME/google-cloud-sdk"; do
+  if [[ -f "$google_cloud_sdk_dir/path.zsh.inc" ]]; then
+    source "$google_cloud_sdk_dir/path.zsh.inc"
+  fi
 
-if [[ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]]; then
-  source "$HOME/google-cloud-sdk/completion.zsh.inc"
-fi
+  if [[ -f "$google_cloud_sdk_dir/completion.zsh.inc" ]]; then
+    source "$google_cloud_sdk_dir/completion.zsh.inc"
+  fi
+
+  if [[ -f "$google_cloud_sdk_dir/path.zsh.inc" ]]; then
+    break
+  fi
+done
+unset google_cloud_sdk_dir
