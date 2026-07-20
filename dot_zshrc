@@ -51,3 +51,14 @@ if command -v peco &>/dev/null; then
   }
   zle -N peco-src
 fi
+
+# ------------------------------
+# pnpm
+# ------------------------------
+if [[ -d "$HOME/.local/share/pnpm" ]]; then
+  export PNPM_HOME="$HOME/.local/share/pnpm"
+  case ":$PATH:" in
+    *":$PNPM_HOME:"*) ;;
+    *) export PATH="$PNPM_HOME:$PATH" ;;
+  esac
+fi
