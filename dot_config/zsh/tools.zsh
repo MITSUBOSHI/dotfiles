@@ -206,3 +206,13 @@ for google_cloud_sdk_dir in "$HOME/.local/google-cloud-sdk" "$HOME/google-cloud-
   fi
 done
 unset google_cloud_sdk_dir
+
+# ------------------------------
+# mise
+# ------------------------------
+if [[ -x "$HOME/.local/bin/mise" ]]; then
+  export PATH="$HOME/.local/bin:$PATH"
+  eval "$("$HOME/.local/bin/mise" activate zsh)"
+elif command -v mise &>/dev/null; then
+  eval "$(mise activate zsh)"
+fi
