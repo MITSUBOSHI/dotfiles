@@ -41,3 +41,10 @@ if [[ -d "$HOME/.local/share/mise/shims" ]]; then
     *) export PATH="$HOME/.local/share/mise/shims:$PATH" ;;
   esac
 fi
+
+# ------------------------------
+# Rust (cargo)
+# ------------------------------
+if [[ -f "$HOME/.cargo/env" ]]; then
+  . "$HOME/.cargo/env"
+fi
