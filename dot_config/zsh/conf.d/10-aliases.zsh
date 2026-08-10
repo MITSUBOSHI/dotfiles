@@ -30,6 +30,11 @@ alias lf="ls -F"
 alias ll="ls -lF"
 alias lla="ls -alF"
 
+# tac fallback (GNU coreutils not installed on macOS by default)
+if ! command -v tac &>/dev/null; then
+  alias tac="tail -r"
+fi
+
 # URL encoding/decoding
 alias urlencode="nkf -wMQ | tr = %"
 alias urldecode="nkf --url-input"
