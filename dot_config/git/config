@@ -16,3 +16,7 @@
   add-p = !git add-peco
   reset-p = !git reset-peco
   rs-p = !git reset-peco
+
+# 端末固有の設定(user, 署名鍵など)は chezmoi 管理外の config.local に置く
+[include]
+  path = config.local
